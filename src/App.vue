@@ -14,7 +14,7 @@
 <script>
 import Sidebar from "@/components/SiderBar.vue";
 import TopHeader from "@/components/TopHeader.vue";
-import UserManagement from "@/components/views/UserManagement.vue";
+import UserManagement from "@/views/UserManagement.vue";
 export default {
   name: "App",
   components: {
