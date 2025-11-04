@@ -1,16 +1,257 @@
-:root{
-    --primary-color: #{$primary-color};
-    --danger-color: #{$danger-color};
+// ========================================
+// CSS 自定义属性 (CSS Custom Properties)
+// ========================================
+:root {
+  // 品牌色
+  --primary-color: #{$primary-color};
+  --success-color: #{$success-color};
+  --warning-color: #{$warning-color};
+  --danger-color: #{$danger-color};
+  --info-color: #{$info-color};
+  
+  // 文本色
+  --text-primary: #{$text-primary};
+  --text-regular: #{$text-regular};
+  --text-secondary: #{$text-secondary};
+  
+  // 背景色
+  --bg-page: #{$bg-page};
+  --bg-white: #{$bg-white};
+  
+  // 边框色
+  --border-base: #{$border-base};
 }
-* ,*::after,*::before{
+
+// ========================================
+// 全局样式重置
+// ========================================
+*, *::after, *::before {
   box-sizing: border-box;
+  // 清除默认 margin 和 padding？
+  // margin: 0;
+  // padding: 0;
 }
+
 body, html {
   margin: 0;
   padding: 0;
   font-size: $font-size-base;
   font-weight: $font-weight-normal;
-  //   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
-  background-color: #f4f7f6;
-  height: 100%;//确保body和html占满整个视口高度
+  // line-height: $line-height-base;
+  // ？
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  color: $text-primary;
+  background-color: $bg-page;
+  height: 100%;
+  // ？
+  // -webkit-font-smoothing: antialiased;
+  // -moz-osx-font-smoothing: grayscale;
 }
+
+// ========================================
+// 通用按钮样式 (Button Utilities)
+// ========================================
+/*
+.btn {
+  display: inline-block;
+  padding: 9px 15px;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: 1.5;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: $border-radius-base;
+  transition: $transition-base;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  // Primary 按钮
+  &.btn-primary {
+    background-color: $btn-primary-bg;
+    color: $btn-primary-text;
+    border-color: $btn-primary-bg;
+    
+    &:hover:not(:disabled) {
+      background-color: $btn-primary-hover;
+      border-color: $btn-primary-hover;
+    }
+    
+    &:active {
+      background-color: $btn-primary-active;
+      border-color: $btn-primary-active;
+    }
+  }
+  
+  // Success 按钮
+  &.btn-success {
+    background-color: $success-color;
+    color: $color-white;
+    border-color: $success-color;
+    
+    &:hover:not(:disabled) {
+      opacity: 0.85;
+    }
+  }
+  
+  // Warning 按钮
+  &.btn-warning {
+    background-color: $warning-color;
+    color: $color-white;
+    border-color: $warning-color;
+    
+    &:hover:not(:disabled) {
+      opacity: 0.85;
+    }
+  }
+  
+  // Danger 按钮
+  &.btn-danger {
+    background-color: $btn-danger-bg;
+    color: $btn-danger-text;
+    border-color: $btn-danger-bg;
+    
+    &:hover:not(:disabled) {
+      background-color: $btn-danger-hover;
+      border-color: $btn-danger-hover;
+    }
+  }
+  
+  // Default 按钮
+  &.btn-default {
+    background-color: $btn-default-bg;
+    color: $btn-default-text;
+    border-color: $btn-default-border;
+    
+    &:hover:not(:disabled) {
+      background-color: $btn-default-hover;
+      border-color: $primary-color;
+      color: $primary-color;
+    }
+  }
+  
+  // Link 按钮
+  &.btn-link {
+    background: none;
+    border: none;
+    color: $primary-color;
+    padding: 4px 8px;
+    
+    &:hover:not(:disabled) {
+      color: $btn-primary-hover;
+    }
+    
+    &.btn-danger {
+      color: $danger-color;
+      background: none;
+      
+      &:hover:not(:disabled) {
+        color: $btn-danger-hover;
+      }
+    }
+  }
+}*/
+
+// ========================================
+// 通用表单样式 (Form Utilities)
+// ========================================
+/*
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+  padding: 8px 12px;
+  font-size: $font-size-base;
+  line-height: $line-height-base;
+  color: $text-primary;
+  background-color: $bg-white;
+  border: 1px solid $input-border;
+  border-radius: $border-radius-base;
+  transition: $transition-base;
+  
+  &:hover {
+    border-color: $input-hover-border;
+  }
+  
+  &:focus {
+    outline: none;
+    border-color: $input-focus-border;
+    box-shadow: 0 0 0 2px rgba(64, 158, 255, 0.1);
+  }
+  
+  &::placeholder {
+    color: $input-placeholder;
+  }
+  
+  &:disabled {
+    background-color: $input-disabled-bg;
+    color: $input-disabled-text;
+    cursor: not-allowed;
+  }
+}
+*/
+// ========================================
+// 角色标签样式 (Role Badge)
+// ========================================
+/*
+.role-badge,
+.role-tag {
+  display: inline-block;
+  padding: 2px 10px;
+  font-size: $font-size-extra-small;
+  font-weight: $font-weight-medium;
+  line-height: 1.5;
+  border-radius: 12px;
+  white-space: nowrap;
+  
+  &.role-admin {
+    background-color: $role-admin-bg;
+    color: $role-admin-text;
+  }
+  
+  &.role-user {
+    background-color: $role-user-bg;
+    color: $role-user-text;
+  }
+  
+  &.role-guest {
+    background-color: $role-guest-bg;
+    color: $role-guest-text;
+  }
+}
+*/
+
+// ========================================
+// 滚动条美化 (Scrollbar Styling)
+// ========================================
+/*
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $bg-lighter;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $text-placeholder;
+  border-radius: 4px;
+  
+  &:hover {
+    background: $text-secondary;
+  }
+}
+*/

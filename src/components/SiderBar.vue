@@ -4,11 +4,12 @@
     <!-- 使用nav -->
     <nav class="menu">
       <ul>
-        <li class="menu-item">仪表盘 (待开发)</li>
+        <li class="menu-item">
+          <!-- 后续可添加图标 -->
+          仪表盘 (待开发)</li>
         <li class="menu-item active">用户管理</li>
         <li class="menu-item">商品管理 (待开发)</li>
         <li class="menu-item">订单管理 (待开发)</li>
-        
       </ul>
     </nav>
   </div>
@@ -24,8 +25,8 @@ export default {};
 }
 .side-bar {
   // Grid布局下不需要设置宽高和定位，由父容器控制
-  background-color: #2c3e50;
-  color: #ecf0f1;
+  background-color: $sidebar-bg;
+  color: $sidebar-text;
   display: flex;
   flex-direction: column;
   .logo {
@@ -37,7 +38,7 @@ export default {};
     justify-content: center;
     font-size: $font-size-large;
     font-weight: bold;
-    border-bottom: 1px solid #34495e;
+    border-bottom: 1px solid $sidebar-border;
     // letter-spacing: 1px;//增加字间距
   }
   .menu {
@@ -53,14 +54,18 @@ export default {};
       .menu-item {
         padding: 15px $base-padding;
         cursor: pointer;
+        // transition: $transition-base;
+        font-size: $font-size-base;
     
         &.active {
-          // background-color: $primary-color;
-          background-color: #1a252f;
-          color: #fff;
+          // $primary-color;
+          background-color: $sidebar-active-bg;
+          color: $sidebar-active-text;
+          font-weight: $font-weight-medium;
         }
+        
         &:hover:not(.active) {
-          background-color: #263445;
+          background-color: $sidebar-hover-bg;
         }
       }
     }

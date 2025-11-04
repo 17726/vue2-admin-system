@@ -104,9 +104,11 @@ export default {
     del(id) {
       this.userList = this.userList.filter((item) => item.id !== id);
     },
+    // 清空搜索框
     clearSearchInput() {
       this.filters.searchText = "";
     },
+
     // --- 弹窗控制表单 ---
     // "C" & "U"
     handleOpenAdd() {
@@ -184,13 +186,18 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    background: $bg-white;
+    border-radius: $border-radius-base;
+    box-shadow: $shadow-base;
     padding: $base-padding;
+    margin-bottom: $base-padding;
+
     .left {
       display: flex;
       gap: 10px;
       align-items: center;
     }
+
     .right {
       display: flex;
       gap: 10px;
@@ -204,27 +211,60 @@ export default {
 
   // 内容区域
   .content-area {
-    background: #fff;
-    border-radius: 4px;
-    // min-height: 400px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    background: $bg-white;
+    // min-height: 400px;？
+    border-radius: $border-radius-base;
+    box-shadow: $shadow-base;
+    // overflow: hidden;？
+
     .user-table {
       width: 100%;
-      //边框合并
+      // 边框合并？
       // border-collapse: collapse;
-      th,
-      td {
-        padding: 12px 15px;
-        //文本左对齐
-        text-align: left;
-        border-bottom: 1px solid #e0e0e0;
+
+      thead {
+        background-color: $table-header-bg;
+
+        th {
+          padding: 12px 15px;
+          text-align: left;
+          font-weight: $font-weight-medium;
+          font-size: $font-size-base;
+          color: $text-primary;
+          border-bottom: 1px solid $table-border;
+        }
+      }
+
+      tbody {
+        tr {
+          // transition: $transition-fast;
+
+          // &:hover {
+          //   background-color: $table-hover-bg;
+          // }
+          // 下边框（非最后一行）
+          &:not(:last-child) {
+            border-bottom: 1px solid $table-border;
+          }
+
+          td {
+            padding: 12px 15px;
+            font-size: $font-size-base;
+            color: $text-regular;
+          }
+        }
       }
     }
+
     .pagination {
       padding: $base-padding;
       text-align: left;
+      border-top: 1px solid $table-border;
+
       .total {
-        color: #606266;
+        //边框
+        // font-size: $font-size-base;
+        color: $text-regular;
       }
     }
   }

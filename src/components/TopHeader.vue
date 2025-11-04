@@ -27,28 +27,37 @@ export default {
     justify-content: space-between;
     height: $top-header-height;
     padding: 0 $base-padding;
-    background-color: #ffffff;
-    border-bottom: 1px solid #e0e0e0;
-    // box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    background-color: $bg-white;
+    border-bottom: 1px solid $border-lighter;
+    // box-shadow: $shadow-base;?
     
     // 面包屑导航
     .breadcrumb{
         display: flex;
         align-items: center;
-        font-size: $font-size-small;
+        font-size: $font-size-base;
         
         .breadcrumb-item{
-            color: #606266;
+            color: $text-regular;
+            // transition: $transition-fast;
             
             &.active{
                 color: $primary-color;
-                font-weight: 500;
+                font-weight: $font-weight-medium;
+            }
+            
+            &:hover:not(.active) {
+                // color: $primary-color;
+                // ?
+                color: $text-regular;
+                cursor: pointer;
             }
         }
         
         .separator{
             margin: 0 8px;
-            color: #c0c4cc;
+            // 占位色
+            color: $text-placeholder;
         }
     }
     

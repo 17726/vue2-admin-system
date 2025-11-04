@@ -101,6 +101,16 @@ export default {
   // 显示在最上层
   z-index: 100;
 }
+// 渐变动画
+// @keyframes fadeIn {
+//   from {
+//     opacity: 0;
+//   }
+//   to {
+//     opacity: 1;
+//   }
+// }
+
 .modal-content {
   background: white;
   padding: $base-padding;

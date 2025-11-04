@@ -1,17 +1,173 @@
-$primary-color:hsl(204, 100%, 50%);
-$danger-color:hsl(348, 100%, 61%);
-$color-text:#606266;
-$color-border:#dcdfe6;
+// ========================================
+// 颜色系统 (Color System)
+// ========================================
 
+// 品牌色 (Brand Colors)
+$primary-color: #409eff; // 主色 - 蓝色
+$success-color: #67c23a; // 成功 - 绿色
+$warning-color: #e6a23c; // 警告 - 橙色
+$danger-color: #f56c6c; // 危险 - 红色
+$info-color: #909399; // 信息 - 灰色
+
+// 中性色 (Neutral Colors) - 用于文本、背景、边框
+$color-white: #ffffff;
+$color-black: #000000;
+
+// 文本色 (Text Colors)
+$text-primary: #303133; // 主要文本
+$text-regular: #606266; // 常规文本
+$text-secondary: #909399; // 次要文本
+$text-placeholder: #c0c4cc; // 占位文本
+
+// 边框色 (Border Colors)
+$border-base: #dcdfe6; // 一级边框
+$border-light: #e4e7ed; // 二级边框
+$border-lighter: #ebeef5; // 三级边框
+$border-extra-light: #f2f6fc; // 四级边框
+
+// 背景色 (Background Colors)
+$bg-white: #ffffff; // 白色背景
+$bg-page: #f5f7fa; // 页面背景
+$bg-light: #fafafa; // 浅色背景
+$bg-lighter: #f5f7fa; // 更浅背景
+
+// 侧边栏深色主题 (Sidebar Dark Theme)
+$sidebar-bg: #304156; // 侧边栏背景
+$sidebar-text: #bfcbd9; // 侧边栏文本
+$sidebar-active-bg: #263445; // 侧边栏激活背景
+$sidebar-active-text: #ffffff; // 侧边栏激活文本
+$sidebar-hover-bg: #263445; // 侧边栏悬停背景
+$sidebar-border: #1f2d3d; // 侧边栏边框
+
+// 阴影 (Shadows)
+$shadow-base:
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    0 0 6px rgba(0, 0, 0, 0.04);
+$shadow-light: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+$shadow-dark:
+    0 2px 4px rgba(0, 0, 0, 0.12),
+    0 0 6px rgba(0, 0, 0, 0.12);
+
+// ========================================
+// 尺寸系统 (Size System)
+// ========================================
+
+// 间距 (Spacing)
 $base-padding: 20px;
-$top-header-height:60px;
+$padding-small: 12px;
+$padding-large: 24px;
 
-$font-size-base:16px;
-$font-size-small:14px;
-$font-size-large:18px;
-$font-weight-normal:400;
-// $font-weight-bold:500;
-// $font-weight-bolder:700;
+// 布局尺寸 (Layout Sizes)
+$sidebar-width: 200px;
+$top-header-height: 60px;
 
-$base-border-radius:4px;
-$base-box-shadow:0 2px 12px 0 rgba(0,0,0,0.1);
+// 圆角 (Border Radius)
+$border-radius-base: 4px;
+$border-radius-small: 2px;
+$border-radius-large: 8px;
+$border-radius-round: 20px;
+
+// ========================================
+// 字体系统 (Typography System)
+// ========================================
+
+$font-size-extra-large: 20px;
+$font-size-large: 18px;
+$font-size-medium: 16px;
+$font-size-base: 14px;
+$font-size-small: 13px;
+$font-size-extra-small: 12px;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
+
+// 行高 (Line Height)
+// $line-height-base: 1.5;
+// $line-height-tight: 1.2;
+// $line-height-loose: 2;
+
+// ========================================
+// 按钮颜色 (Button Colors)
+// ========================================
+
+// // Primary 按钮
+// $btn-primary-bg: $primary-color;
+// $btn-primary-text: $color-white;
+// $btn-primary-hover: #66b1ff;
+// $btn-primary-active: #3a8ee6;
+
+// // Danger 按钮
+// $btn-danger-bg: $danger-color;
+// $btn-danger-text: $color-white;
+// $btn-danger-hover: #f78989;
+// $btn-danger-active: #dd6161;
+
+// // Default 按钮
+// $btn-default-bg: $color-white;
+// $btn-default-text: $text-regular;
+// $btn-default-border: $border-base;
+// $btn-default-hover: #ecf5ff;
+
+// ========================================
+// 表格颜色 (Table Colors)
+// ========================================
+
+$table-header-bg: #fafafa;
+$table-header-text: $text-secondary;
+$table-border: $border-lighter;
+$table-hover-bg: #f5f7fa;
+
+// ========================================
+// 表单颜色 (Form Colors)
+// ========================================
+
+// $input-border: $border-base;
+// $input-hover-border: #c0c4cc;
+// $input-focus-border: $primary-color;
+// $input-placeholder: $text-placeholder;
+// $input-disabled-bg: #f5f7fa;
+// $input-disabled-text: $text-placeholder;
+
+// ========================================
+// 角色标签颜色 (Role Badge Colors)
+// ========================================
+
+// $role-admin-bg: #fef0f0;
+// $role-admin-text: $danger-color;
+
+// $role-user-bg: #ecf5ff;
+// $role-user-text: $primary-color;
+
+// $role-guest-bg: #f4f4f5;
+// $role-guest-text: $info-color;
+
+// ========================================
+// Z-Index 层级 (Z-Index Layers)
+// ========================================
+
+// $z-index-normal: 1;
+// $z-index-top: 10;
+// $z-index-dialog: 100;
+// $z-index-overlay: 1000;
+// $z-index-notification: 2000;
+
+// ========================================
+// 过渡动画 (Transitions)
+// ========================================
+
+// $transition-base: all 0.3s ease;
+// $transition-fast: all 0.2s ease;
+// $transition-slow: all 0.4s ease;
+
+// ========================================
+// 兼容旧变量 (Deprecated - 保持向后兼容)
+// ========================================
+
+$color-text: $text-regular;
+$color-border: $border-base;
+$font-size-base: 14px;
+$font-weight-normal: 400;
+$base-border-radius: $border-radius-base;
+$base-box-shadow: $shadow-light;

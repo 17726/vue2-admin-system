@@ -54,22 +54,23 @@ export default {
 // 主内容区域
 .main {
   grid-area: main;
-  background-color: #f5f7fa;
+  background-color: $bg-page;
+  // ？
   // overflow-y: auto; // 内部滚动
   // overflow-x: hidden;
 }
 
 // 响应式: 小屏幕隐藏侧边栏
-// @media (max-width: 768px) {
-  // #app {
-  //   grid-template-areas:
-  //     "header"
-  //     "main";
-  //   grid-template-columns: 1fr;
-  // }
+@media (max-width: 768px) {
+  #app {
+    grid-template-areas:
+      "header"
+      "main";
+    grid-template-columns: 1fr;
+  }
 
-  // .sidebar {
-  //   display: none; // 或改为抽屉式
-  // }
-// }
+  .sidebar {
+    display: none; // 或改为抽屉式
+  }
+}
 </style>
