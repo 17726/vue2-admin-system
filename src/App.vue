@@ -1,28 +1,34 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <!-- 侧边栏  -->
+    <sidebar></sidebar>
+    <div class="main-container">
+      <!-- 顶栏 -->
+      <TopHeader></TopHeader>
+
+      <div class="app-main">
+        <!-- 用户管理页面 -->
+        <UserManagement></UserManagement>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
+import Sidebar from '@/components/SiderBar.vue';
+import TopHeader from '@/components/TopHeader.vue';
+import UserManagement from '@/components/views/UserManagement.vue';
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Sidebar,
+    TopHeader,
+    UserManagement
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="scss" scoped>
+
 </style>
