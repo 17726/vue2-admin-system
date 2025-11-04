@@ -10,9 +10,12 @@
         <input
           type="text"
           class="search-input"
-          placeholder="搜索用户名、邮箱..."
+          placeholder="搜索用户名、邮箱、角色..."
+          v-model="filters.searchText"
         />
-        <button class="btn btn-default">搜索</button>
+        <!-- 实时搜索不需按钮 -->
+        <!-- <button class="btn btn-default" >搜索</button> -->
+         <button class="btn btn-default" @click="clearSearchInput()">清空</button>
       </div>
     </div>
 
@@ -25,29 +28,31 @@
               <input type="checkbox" />
             </th>
             <th>序号</th>
-            <th>ID</th>
             <th>用户名</th>
+            <!-- <th>ID</th> -->
             <th>邮箱</th>
             <th>角色</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item,index) in userList" :key="item.id">
+          <tr v-for="(item, index) in filteredUserList" :key="item.id">
             <td><input type="checkbox" /></td>
             <td>{{ index + 1 }}</td>
-            <td>{{item.id}}</td>
-            <td>{{item.name}}</td>
+            <td>{{ item.name }}</td>
+            <!-- <td>{{ item.id }}</td> -->
             <td>{{ item.email }}</td>
             <td>{{ item.role }}</td>
             <td>
               <button class="btn btn-link">编辑</button>
-              <button class="btn btn-link btn-danger">删除</button>
+              <button class="btn btn-link btn-danger" @click="del(item.id)">
+                删除
+              </button>
             </td>
           </tr>
         </tbody>
       </table>
-      
+
       <!-- 分页器 (后续实现) -->
       <div class="pagination">
         <span class="total">共 {{ userList.length }} 条</span>
@@ -66,7 +71,35 @@ export default {
         { id: 3, name: "王五", email: "wangwu@test.com", role: "Guest" },
         { id: 4, name: "赵六", email: "zhaoliu@test.com", role: "User" },
       ],
+      filters: {
+        searchText: "",
+      },
     };
+  },
+  methods: {
+    del(id) {
+      this.userList = this.userList.filter((item) => item.id !== id);
+    },
+    clearSearchInput() {
+      this.filters.searchText = "";
+    }
+  },
+  computed: {
+    filteredUserList() {
+      const list = this.userList;
+      const searchText = this.filters.searchText.trim().toLowerCase();
+      //为空返回全部列表
+      if (!searchText) {
+        return list;
+      }
+      return list.filter((user) => {
+        //不区分大小写搜索
+        return (user.name.toLocaleLowerCase().includes(searchText) ||
+          user.email.toLocaleLowerCase().includes(searchText) ||
+          user.role.toLocaleLowerCase().includes(searchText)
+        )
+      });
+    },
   },
 };
 </script>
@@ -91,6 +124,7 @@ export default {
       display: flex;
       gap: 10px;
       align-items: center;
+
       .search-input {
         // width: min(240px,100%);
       }
@@ -103,24 +137,24 @@ export default {
     border-radius: 4px;
     // min-height: 400px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
-    .user-table{
-        width: 100%;
-        //边框合并
-        // border-collapse: collapse;
-        th,td{
-            padding: 12px 15px;
-            //文本左对齐
-            text-align: left;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-    }
-    .pagination{
-        padding: $base-padding;
+    .user-table {
+      width: 100%;
+      //边框合并
+      // border-collapse: collapse;
+      th,
+      td {
+        padding: 12px 15px;
+        //文本左对齐
         text-align: left;
-        .total{
-            color: #606266;
-        }
+        border-bottom: 1px solid #e0e0e0;
+      }
+    }
+    .pagination {
+      padding: $base-padding;
+      text-align: left;
+      .total {
+        color: #606266;
+      }
     }
   }
 }

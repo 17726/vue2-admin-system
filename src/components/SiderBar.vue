@@ -4,9 +4,11 @@
     <!-- 使用nav -->
     <nav class="menu">
       <ul>
+        <li class="menu-item">仪表盘 (待开发)</li>
         <li class="menu-item active">用户管理</li>
-        <li class="menu-item">商品管理 (空)</li>
-        <li class="menu-item">订单管理 (空)</li>
+        <li class="menu-item">商品管理 (待开发)</li>
+        <li class="menu-item">订单管理 (待开发)</li>
+        
       </ul>
     </nav>
   </div>
