@@ -8,6 +8,9 @@
 body, html {
   margin: 0;
   padding: 0;
-//   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  //   font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
   background-color: #f4f7f6;
+  height: 100%;//确保body和html占满整个视口高度
 }
