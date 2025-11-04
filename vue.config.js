@@ -1,6 +1,19 @@
 const { defineConfig } = require("@vue/cli-service");
 module.exports = defineConfig({
   transpileDependencies: true,
+
+  // GitHub Pages 部署配置
+  publicPath:
+    process.env.NODE_ENV === "production"
+      ? "/vue2-admin-system/" // 仓库名
+      : "/",
+
+  // 输出目录
+  outputDir: "dist",
+
+  // 不生成 source map (减小构建体积)
+  productionSourceMap: false,
+
   css: {
     loaderOptions: {
       sass: {
@@ -9,5 +22,5 @@ module.exports = defineConfig({
         additionalData: `@import "@/assets/styles/_variables.scss";`,
       },
     },
-  },  
+  },
 });
