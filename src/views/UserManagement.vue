@@ -70,6 +70,9 @@
         @save="handleSave"
         @close="handleClose"
       >
+      <!--:user 传递当前编辑的用户对象 -->
+      <!--@save 监听保存事件 -->
+      <!--@close 监听关闭事件 -->
       </UserFormModal>
     </div>
   </div>
@@ -90,12 +93,14 @@ export default {
         { id: 3, name: "王五", email: "wangwu@test.com", role: "Guest" },
         { id: 4, name: "赵六", email: "zhaoliu@test.com", role: "User" },
       ],
+      // 用于实现搜索过滤
       filters: {
         searchText: "",
       },
       // 控制用户表单弹窗显示与否
       dialogVisible: false,
-      // 当前编辑的用户对象, null表示新增
+      // 当前编辑的用户对象（数据）, null表示新增
+      // 单向数据流：用于表单数据显示
       editingUser: null,
     };
   },
@@ -111,6 +116,7 @@ export default {
 
     // --- 弹窗控制表单 ---
     // "C" & "U"
+    // 开启弹窗
     handleOpenAdd() {
       this.editingUser = null; // 新增模式
       this.dialogVisible = true;
@@ -119,15 +125,18 @@ export default {
     handleOpenEdit(user) {
       // 传递用户对象
       this.editingUser = user; // 编辑模式
+      // userFormModal接收该属性并填充表单
       this.dialogVisible = true;
     },
+    // 关闭弹窗
     handleClose() {
       this.dialogVisible = false;
       this.editingUser = null; // 关闭时清空
     },
     // 保存用户数据
     handleSave(formData) {
-      console.log("保存的用户数据:", formData);
+      // formData 来自子组件的表单数据，为用户数据对象
+      // console.log("保存的用户数据:", formData);
       if (formData.id) {
         // 编辑模式：根据 id 查找并更新
         const index = this.userList.findIndex(
@@ -135,14 +144,14 @@ export default {
         );
         // findIndex找不到返回-1
         if (index !== -1) {
-          // // 使用 Vue.set 或 $set 确保响应式更新
-          // this.$set(this.userList, index, formData);
+          // 或使用 Vue.set 或 $set 确保响应式更新 ?
+          // this.$set(this.userList, index, formData); 
+
           // 直接替换对象
           this.userList[index] = formData;
         }
       } else {
         // null新增模式
-
         this.userList.push({
           id: Date.now(),
           // 或用...formData,展开语法
@@ -157,6 +166,7 @@ export default {
   },
   computed: {
     // "R"
+    // 搜索/筛选功能
     filteredUserList() {
       const list = this.userList;
       const searchText = this.filters.searchText.trim().toLowerCase();
