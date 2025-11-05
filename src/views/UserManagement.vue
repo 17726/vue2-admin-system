@@ -120,16 +120,20 @@ export default {
   methods: {
     // "D"
     del(id) {
-      this.userList = this.userList.filter((item) => item.id !== id);
-      // 同时清除复选框记录
-      this.selectedIds = this.selectedIds.filter(
-        (selectedId) => selectedId !== id
-      );
+      if (confirm("确定删除该用户吗？")) {
+        this.userList = this.userList.filter((item) => item.id !== id);
+        // 同时清除复选框记录
+        this.selectedIds = this.selectedIds.filter(
+          (selectedId) => selectedId !== id
+        );
+      }
     },
     delSelected() {
-      this.userList = this.userList.filter((user) => {
-        return !this.selectedIds.includes(user.id);
-      });
+      if (confirm(`确定删除选中的${this.selectedIds.length}个用户吗？`)) {
+        this.userList = this.userList.filter((user) => {
+          return !this.selectedIds.includes(user.id);
+        });
+      }
     },
     // 清空搜索框
     clearSearchInput() {
