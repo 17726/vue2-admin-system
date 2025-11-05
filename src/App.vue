@@ -56,8 +56,8 @@ export default {
   grid-area: main;
   background-color: $bg-page;
   // ？
-  // overflow-y: auto; // 内部滚动
-  // overflow-x: hidden;
+  overflow-y: auto; // 支持内部垂直滚动
+  overflow-x: auto; // 支持横向滚动
 }
 
 // 响应式: 小屏幕隐藏侧边栏

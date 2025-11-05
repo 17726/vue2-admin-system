@@ -243,6 +243,7 @@ export default {
 
 <style lang="scss" scoped>
 .user-management {
+  min-width: max-content;
   padding: $base-padding;
 
   // 操作工具栏
