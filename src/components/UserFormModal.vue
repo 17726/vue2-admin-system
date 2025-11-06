@@ -27,9 +27,9 @@
           </select>
         </div>
         <div class="form-action">
-          <button type="button" class="btn-cancel" @click="close">取消</button>
+          <el-button type="button" class="btn-cancel" @click="close">取消</el-button>
           <!-- 注意为button设置type -->
-          <button type="submit" class="btn-save">保存</button>
+          <el-button type="submit" class="btn-save">保存</el-button>
           <!-- 注意save-submit事件应与form元素的绑定 -->
         </div>
       </form>

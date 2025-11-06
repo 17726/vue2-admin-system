@@ -3,16 +3,16 @@
     <!-- 操作栏 -->
     <div class="toolbar">
       <div class="left">
-        <button class="btn btn-primary" @click="handleOpenAdd()">
+        <el-button class="btn btn-primary" @click="handleOpenAdd()">
           + 新增用户
-        </button>
-        <button
+        </el-button>
+        <el-button
           class="btn btn-danger"
           :disabled="selectedIds.length <= 0"
           @click="delSelected()"
         >
           批量删除
-        </button>
+        </el-button>
       </div>
       <div class="right">
         <input
@@ -23,9 +23,9 @@
         />
         <!-- 实时搜索不需按钮 -->
         <!-- <button class="btn btn-default" >搜索</button> -->
-        <button class="btn btn-default" @click="clearSearchInput()">
+        <el-button class="btn btn-default" @click="clearSearchInput()">
           清空
-        </button>
+        </el-button>
       </div>
     </div>
 
@@ -58,12 +58,12 @@
             <td>{{ item.email }}</td>
             <td>{{ item.role }}</td>
             <td>
-              <button class="btn btn-link" @click="handleOpenEdit(item)">
+              <el-button class="btn btn-link" @click="handleOpenEdit(item)">
                 编辑
-              </button>
-              <button class="btn btn-link btn-danger" @click="del(item.id)">
+              </el-button>
+              <el-button class="btn btn-link btn-danger" @click="del(item.id)">
                 删除
-              </button>
+              </el-button>
             </td>
           </tr>
         </tbody>
