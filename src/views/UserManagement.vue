@@ -3,11 +3,12 @@
     <!-- 操作栏 -->
     <div class="toolbar">
       <div class="left">
-        <el-button class="btn btn-primary" @click="handleOpenAdd()">
-          + 新增用户
+        <el-button type="primary" icon="el-icon-plus" @click="handleOpenAdd()">
+          新增用户
         </el-button>
         <el-button
-          class="btn btn-danger"
+          type="danger"
+          icon="el-icon-delete"
           :disabled="selectedIds.length <= 0"
           @click="delSelected()"
         >
@@ -23,9 +24,7 @@
         />
         <!-- 实时搜索不需按钮 -->
         <!-- <button class="btn btn-default" >搜索</button> -->
-        <el-button class="btn btn-default" @click="clearSearchInput()">
-          清空
-        </el-button>
+        <el-button type="primary" plain @click="clearSearchInput()"> 清空 </el-button>
       </div>
     </div>
 
@@ -58,11 +57,11 @@
             <td>{{ item.email }}</td>
             <td>{{ item.role }}</td>
             <td>
-              <el-button class="btn btn-link" @click="handleOpenEdit(item)">
+              <el-button type="primary" plain  icon="el-icon-edit" @click="handleOpenEdit(item)">
                 编辑
               </el-button>
-              <el-button class="btn btn-link btn-danger" @click="del(item.id)">
-                删除
+              <el-button type="danger" plain circle icon="el-icon-delete" @click="del(item.id)">
+                
               </el-button>
             </td>
           </tr>
@@ -134,6 +133,8 @@ export default {
           return !this.selectedIds.includes(user.id);
         });
       }
+      // 清空已选择的ID
+      this.selectedIds = [];
     },
     // 清空搜索框
     clearSearchInput() {

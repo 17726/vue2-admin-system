@@ -6,12 +6,32 @@
       <!-- 动态切换标题 -->
       <h3>{{ formTitle }}</h3>
       <!-- 表单实现增/改 -->
+      <el-form v-model="formData" ref="userForm">
+        <el-form-item prop="name" label="用户名" :rules="[{required:true, message: '请输入用户名', trigger: 'blur'}]">
+          <el-input type="text" v-model="formData.name"> </el-input>
+        </el-form-item>
+        <el-form-item prop="email" label="邮箱">
+          <el-input v-model="formData.email"></el-input>
+        </el-form-item>
+        <el-form-item prop="role" label="角色">
+          <el-select v-model="formData.role">
+            <el-option label="User" value="User"></el-option>
+            <el-option label="Admin" value="Admin"></el-option>
+            <el-option label="Guest" value="Guest"></el-option>
+          </el-select>
+        </el-form-item>
+        <div>
+          <el-button @click="close()">取消</el-button>
+          <el-button type="primary" @click="save()">保存</el-button>
+        </div>
+      </el-form>
+      <!-- 
       <form @submit.prevent="save()">
-        <!-- 纯前端不提交到后端，阻止默认提交action="" -->
+         纯前端不提交到后端，阻止默认提交action=""
         <div class="form-group">
           <label for="name">用户名</label>
           <input type="text" id="name" v-model="formData.name" required />
-          <!-- 设置required必选 -->
+           设置required必选
         </div>
         <div class="form-group">
           <label for="email">邮箱</label>
@@ -20,7 +40,7 @@
         <div class="form-group">
           <label for="role">角色</label>
           <select name="role" id="role" v-model="formData.role">
-            <!-- name? -->
+             name?
             <option value="User">User</option>
             <option value="Admin">Admin</option>
             <option value="Guest">Guest</option>
@@ -28,11 +48,12 @@
         </div>
         <div class="form-action">
           <el-button type="button" class="btn-cancel" @click="close">取消</el-button>
-          <!-- 注意为button设置type -->
+           注意为button设置type
           <el-button type="submit" class="btn-save">保存</el-button>
-          <!-- 注意save-submit事件应与form元素的绑定 -->
+           注意save-submit事件应与form元素的绑定
         </div>
-      </form>
+      </form> 
+      -->
     </div>
   </div>
 </template>
@@ -54,7 +75,7 @@ export default {
         id: null,
         name: "",
         email: "",
-        role: "User",
+        role: "",
       },
     };
   },
@@ -64,8 +85,16 @@ export default {
       this.$emit("close");
     },
     save() {
-      // 传递“保存”事件，携带表单数据
-      this.$emit("save", this.formData);
+      // 先执行表单校验在保存到父组件
+      this.$refs.userForm.validate((valid) => {
+        if (valid) {
+          this.$emit("save", this.formData);
+        } else {
+          console.log("表单验证失败");
+          return false;
+        }
+      });
+      
     },
   },
   computed: {
@@ -129,23 +158,23 @@ export default {
   box-shadow: $base-box-shadow;
   // 显示在弹窗之上
   z-index: 101;
-  form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: $base-padding;
-    .form-group {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      justify-content: space-between;
-      gap: $base-padding;
-    }
-    .form-action {
-      display: flex;
-      justify-content: space-between;
-      gap: $base-padding;
-    }
-  }
+  // form {
+  //   display: flex;
+  //   flex-direction: column;
+  //   justify-content: center;
+  //   gap: $base-padding;
+  //   .form-group {
+  //     display: flex;
+  //     flex-direction: row;
+  //     align-items: center;
+  //     justify-content: space-between;
+  //     gap: $base-padding;
+  //   }
+  //   .form-action {
+  //     display: flex;
+  //     justify-content: space-between;
+  //     gap: $base-padding;
+  //   }
+  // }
 }
 </style>
