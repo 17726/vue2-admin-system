@@ -1,7 +1,7 @@
 <template>
   <!-- 点击背景关闭弹窗 -->
   <div class="modal-backdrop" @click.self="close">
-    <!-- @click.self ? -->
+    <!-- @click.self 为仅此元素点击触发，子元素被点击时不会触发 -->
     <div class="modal-content">
       <!-- 动态切换标题 -->
       <h3>{{ formTitle }}</h3>
@@ -22,7 +22,7 @@
         <el-form-item prop="role" label="角色">
           <el-select v-model="formData.role">
             <el-option value="User" label="User"></el-option>
-            <el-option value="Admin" label="Admin"></el-option>
+            <el-option value="Admi（n" label="Admin"></el-option>
             <el-option value="Guest" label="Guest"></el-option>
           </el-select>
         </el-form-item>
@@ -126,16 +126,16 @@ export default {
             email: newValue.email,
             role: newValue.role,
           };
-          // 或直接this.formData = newValue;？
+          // 或直接this.formData = newValue;？？
         } else {
           // 新增模式
-          // form视图置空？（是否必须）
-          this.formData = {
-            id: null,
-            name: "",
-            email: "",
-            role: "",
-          };
+          // form视图置空？？（是否必须）
+          // this.formData = {
+          //   id: null,
+          //   name: "",
+          //   email: "",
+          //   role: "",
+          // };
         }
       },
     },

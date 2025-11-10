@@ -249,10 +249,10 @@ export default {
       set(newValue) {
         if (newValue) {
           // 当前筛选结果全选时，将当前所有id加入selectedIds
-          // 为避免重复，先检查是否已存在？
+          // 为避免重复，先检查是否已存在
           this.filteredUserList.forEach((user) => {
             if (!this.selectedIds.includes(user.id)) {
-              this.selectedIds.push(user.id);
+              this.selectedIds.push(user.id);//??还有更好的方法吗
             }
           });
         } else {

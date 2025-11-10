@@ -44,7 +44,7 @@ export default {
   height: 100vh;
   width: 100vw;
   // 100%还是100vh？
-  overflow: hidden; // 防止整体滚动区域（是否必须？
+  overflow: hidden; // 防止整体滚动区域（是否必须？？
 }
 
 .sidebar {
