@@ -24,7 +24,9 @@
         />
         <!-- 实时搜索不需按钮 -->
         <!-- <button class="btn btn-default" >搜索</button> -->
-        <el-button type="primary" plain @click="clearSearchInput()"> 清空 </el-button>
+        <el-button type="primary" plain @click="clearSearchInput()">
+          清空
+        </el-button>
       </div>
     </div>
 
@@ -57,11 +59,21 @@
             <td>{{ item.email }}</td>
             <td>{{ item.role }}</td>
             <td>
-              <el-button type="primary" plain  icon="el-icon-edit" @click="handleOpenEdit(item)">
+              <el-button
+                type="primary"
+                plain
+                icon="el-icon-edit"
+                @click="handleOpenEdit(item)"
+              >
                 编辑
               </el-button>
-              <el-button type="danger" plain circle icon="el-icon-delete" @click="del(item.id)">
-                
+              <el-button
+                type="danger"
+                plain
+                circle
+                icon="el-icon-delete"
+                @click="del(item.id)"
+              >
               </el-button>
             </td>
           </tr>
@@ -163,20 +175,26 @@ export default {
     // 保存用户数据
     handleSave(formData) {
       // formData 来自子组件的表单数据，为用户数据对象
-      // console.log("保存的用户数据:", formData);
       if (formData.id) {
         // 编辑模式：根据 id 查找并更新
-        const index = this.userList.findIndex(
-          (item) => item.id === formData.id
-        );
-        // findIndex找不到返回-1
-        if (index !== -1) {
-          // 或使用 Vue.set 或 $set 确保响应式更新 ?
-          // this.$set(this.userList, index, formData);
+        this.userList = this.userList.map((item) => {
+          if (item.id === formData.id) {
+            return formData;
+          } else {
+            return item;
+          }
+        });
+        // const index = this.userList.findIndex(
+        //   (item) => item.id === formData.id
+        // );
+        // // findIndex找不到返回-1
+        // if (index !== -1) {
+        //   // 或使用 Vue.set 或 $set 确保响应式更新
+        //   // this.$set(this.userList, index, formData);
 
-          // 直接替换对象
-          this.userList[index] = formData;
-        }
+        //   // 直接替换对象（不推荐）
+        //   this.userList[index] = formData;
+        // }
       } else {
         // null新增模式
         this.userList.push({
