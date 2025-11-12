@@ -58,20 +58,22 @@
           header-align="center"
           width="60"
         ></el-table-column>
-        <el-table-column prop="name" label="姓名"  show-overflow-tooltip>
+        <el-table-column prop="name" label="姓名" min-width="60" show-overflow-tooltip>
         </el-table-column>
         <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
           <!--show-overflow-tooltip 会在内容溢出时显示提示信息 -->
         </el-table-column>
         <el-table-column prop="role" label="角色" width="60"> </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right">
-          <template slot-scope="scope">
-            <el-button size="mini" @click="handleOpenEdit(scope.row)"
-              >编辑</el-button
-            >
-            <el-button size="mini" type="danger" @click="del(scope.row.id)"
-              >删除</el-button
-            >
+        <el-table-column label="操作" align="center" fixed="right" width="120">
+          <template slot-scope="scope" >
+           <div class="ops">
+              <el-button size="mini" type="primary" plain @click="handleOpenEdit(scope.row)"
+                >编辑</el-button
+              >
+              <el-button size="mini" type="danger" plain @click="del(scope.row.id)" icon="el-icon-delete" circle
+                ></el-button
+              >
+           </div>
           </template>
         </el-table-column>
       </el-table>
@@ -182,6 +184,7 @@ export default {
       // formData 来自子组件的表单数据，为用户数据对象
       if (formData.id) {
         // 编辑模式：根据 id 查找并更新
+        // map方法
         this.userList = this.userList.map((item) => {
           if (item.id === formData.id) {
             return formData;
@@ -189,6 +192,7 @@ export default {
             return item;
           }
         });
+        // index替换方法
         // const index = this.userList.findIndex(
         //   (item) => item.id === formData.id
         // );
@@ -313,44 +317,16 @@ export default {
     box-shadow: $shadow-base;
     // overflow: hidden;？
 
-    // .user-table {
-    //   width: 100%;
-    //   // 边框合并？
-    //   // border-collapse: collapse;
-
-    //   thead {
-    //     background-color: $table-header-bg;
-
-    //     th {
-    //       padding: 12px 15px;
-    //       text-align: left;
-    //       font-weight: $font-weight-medium;
-    //       font-size: $font-size-base;
-    //       color: $text-primary;
-    //       border-bottom: 1px solid $table-border;
-    //     }
-    //   }
-
-    //   tbody {
-    //     tr {
-    //       // transition: $transition-fast;
-
-    //       // &:hover {
-    //       //   background-color: $table-hover-bg;
-    //       // }
-    //       // 下边框（非最后一行）
-    //       &:not(:last-child) {
-    //         border-bottom: 1px solid $table-border;
-    //       }
-
-    //       td {
-    //         padding: 12px 15px;
-    //         font-size: $font-size-base;
-    //         color: $text-regular;
-    //       }
-    //     }
-    //   }
-    // }
+    el-table{
+      el-table-column{
+        .ops{
+          display: flex;
+          flex-wrap: wrap;
+          align-content: center;
+          justify-content: center;
+        }
+      }
+    }
 
     .pagination {
       padding: $base-padding;
