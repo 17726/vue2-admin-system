@@ -91,7 +91,7 @@
         @save="handleSave"
         @close="handleClose"
       >
-        <!--:user 传递当前编辑的用户对象 -->
+        <!--:user 传递当前编辑的用户对象(父传子) -->
         <!--@save 监听保存事件 -->
         <!--@close 监听关闭事件 -->
       </UserFormModal>

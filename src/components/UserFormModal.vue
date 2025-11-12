@@ -13,7 +13,10 @@
         label-position="right"
         label-width="5rem"
       >
+      <!-- :model单向数据流：父组件传递数据，子组件props：{model：formData} -->
+
         <el-form-item prop="name" label="用户名">
+          <!-- prop: el-form绑定model的对象的属性，用于校验 -->
           <el-input v-model="formData.name"></el-input>
         </el-form-item>
         <el-form-item prop="email" label="邮箱">
@@ -22,7 +25,7 @@
         <el-form-item prop="role" label="角色">
           <el-select v-model="formData.role">
             <el-option value="User" label="User"></el-option>
-            <el-option value="Admi（n" label="Admin"></el-option>
+            <el-option value="Admin" label="Admin"></el-option>
             <el-option value="Guest" label="Guest"></el-option>
           </el-select>
         </el-form-item>
@@ -44,6 +47,27 @@ export default {
     },
   },
   data() {
+    const checkName = (rule, value, callback) => {
+      /**
+       * 验证用户名（async-validator 规则用法）
+       * @param {Object} rule
+       * @param {string} value
+       * @param {Function} callback
+       */
+      if (!value) {
+        callback(new Error("请输入姓名"));
+        return;
+      }
+      setTimeout(()=>{
+        if (value.length < 2) {
+        callback(new Error("姓名至少2个字符"));
+      } else if(value.length > 20) {
+        callback(new Error("姓名不能超过20个字符"));
+      }
+      else {
+        callback();
+      }},100);
+    };
     return {
       formData: {
         // id默认为空（不可编辑）
@@ -59,8 +83,8 @@ export default {
         // key对应formData
         // trigger(触发器)：blur表示输入框失去焦点时校验
         name: [
-          { required: true, message: "请输入用户", trigger: "blur" },
-          { min: 2, max: 10, message: "长度在3到10个字符", trigger: "blur" },
+          // { required: true, message: "请输入用户", trigger: "blur" },
+          {validator:checkName, trigger: "blur" },
         ],
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },
@@ -86,7 +110,7 @@ export default {
     save() {
       this.$refs.userForm.validate((valid) => {
         if (valid) {
-          // console.log("11")
+          // 表单校验通过
           this.$emit("save", this.formData);
         } else {
           // alert("请检查表单格式");
