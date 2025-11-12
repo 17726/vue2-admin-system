@@ -3,7 +3,12 @@
     <!-- 操作栏 -->
     <div class="toolbar">
       <div class="left">
-        <el-button type="primary" icon="el-icon-plus" @click="handleOpenAdd()">
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleOpenAdd()"
+          size="medium"
+        >
           新增用户
         </el-button>
         <el-button
@@ -11,20 +16,26 @@
           icon="el-icon-delete"
           :disabled="selectedIds.length <= 0"
           @click="delSelected()"
+          size="medium"
         >
           批量删除
         </el-button>
       </div>
       <div class="right">
-        <input
+        <el-input
           type="text"
-          class="search-input"
+          size="medium"
           placeholder="搜索用户名、邮箱、角色..."
           v-model="filters.searchText"
         />
         <!-- 实时搜索不需按钮 -->
         <!-- <button class="btn btn-default" >搜索</button> -->
-        <el-button type="primary" plain @click="clearSearchInput()">
+        <el-button
+          type="primary"
+          plain
+          size="medium"
+          @click="clearSearchInput()"
+        >
           清空
         </el-button>
       </div>
@@ -32,57 +43,42 @@
 
     <!-- 用户列表表格 -->
     <div class="content-area">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>
-              <!-- 绑定全选到计算属性 -->
-              <input type="checkbox" v-model="selectedAll" />
-            </th>
-            <th>序号</th>
-            <th>用户名</th>
-            <!-- <th>ID</th> -->
-            <th>邮箱</th>
-            <th>角色</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in filteredUserList" :key="item.id">
-            <!-- 复选框绑定数组，勾选会自动将value加入到数组 -->
-            <td>
-              <input type="checkbox" :value="item.id" v-model="selectedIds" />
-            </td>
-            <td>{{ index + 1 }}</td>
-            <td>{{ item.name }}</td>
-            <!-- <td>{{ item.id }}</td> -->
-            <td>{{ item.email }}</td>
-            <td>{{ item.role }}</td>
-            <td>
-              <el-button
-                type="primary"
-                plain
-                icon="el-icon-edit"
-                @click="handleOpenEdit(item)"
-              >
-                编辑
-              </el-button>
-              <el-button
-                type="danger"
-                plain
-                circle
-                icon="el-icon-delete"
-                @click="del(item.id)"
-              >
-              </el-button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <el-table
+        :data="filteredUserList"
+        style="width: 100%"
+        @selection-change="handleSelectionChange"
+      >
+        <!--selection-change事件返回当前选中项的对象数组 -->
+        <el-table-column type="selection" width="40"></el-table-column>
+
+        <el-table-column
+          type="index"
+          label="序号"
+          align="center"
+          header-align="center"
+          width="60"
+        ></el-table-column>
+        <el-table-column prop="name" label="姓名"  show-overflow-tooltip>
+        </el-table-column>
+        <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
+          <!--show-overflow-tooltip 会在内容溢出时显示提示信息 -->
+        </el-table-column>
+        <el-table-column prop="role" label="角色" width="60"> </el-table-column>
+        <el-table-column label="操作" align="center" fixed="right">
+          <template slot-scope="scope">
+            <el-button size="mini" @click="handleOpenEdit(scope.row)"
+              >编辑</el-button
+            >
+            <el-button size="mini" type="danger" @click="del(scope.row.id)"
+              >删除</el-button
+            >
+          </template>
+        </el-table-column>
+      </el-table>
 
       <!-- 分页器 (后续实现) -->
       <div class="pagination">
-        <span class="total">共 {{ userList.length }} 条</span>
+        <span class="total">共 {{ filteredUserList.length }} 条</span>
       </div>
       <!-- 用户表单弹窗 -->
       <UserFormModal
@@ -129,6 +125,15 @@ export default {
     };
   },
   methods: {
+    handleSelectionChange(selection) {
+      // console.log("选中项：", selection);
+      // selection为当前选中的行 对象 数组
+
+      this.selectedIds = selection.map((item) => {
+        return item.id;
+      });
+      console.log(this.selectedIds);
+    },
     // "D"
     del(id) {
       if (confirm("确定删除该用户吗？")) {
@@ -252,7 +257,7 @@ export default {
           // 为避免重复，先检查是否已存在
           this.filteredUserList.forEach((user) => {
             if (!this.selectedIds.includes(user.id)) {
-              this.selectedIds.push(user.id);//??还有更好的方法吗
+              this.selectedIds.push(user.id); //??还有更好的方法吗
             }
           });
         } else {
@@ -266,7 +271,7 @@ export default {
 
 <style lang="scss" scoped>
 .user-management {
-  min-width: max-content;
+  // min-width: max-content;
   padding: $base-padding;
 
   // 操作工具栏
@@ -274,6 +279,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    // 未达到断点不换行
+    flex-wrap: nowrap;
     background: $bg-white;
     border-radius: $border-radius-base;
     box-shadow: $shadow-base;
@@ -299,50 +306,51 @@ export default {
 
   // 内容区域
   .content-area {
+    padding: $base-padding;
     background: $bg-white;
     // min-height: 400px;？
     border-radius: $border-radius-base;
     box-shadow: $shadow-base;
     // overflow: hidden;？
 
-    .user-table {
-      width: 100%;
-      // 边框合并？
-      // border-collapse: collapse;
+    // .user-table {
+    //   width: 100%;
+    //   // 边框合并？
+    //   // border-collapse: collapse;
 
-      thead {
-        background-color: $table-header-bg;
+    //   thead {
+    //     background-color: $table-header-bg;
 
-        th {
-          padding: 12px 15px;
-          text-align: left;
-          font-weight: $font-weight-medium;
-          font-size: $font-size-base;
-          color: $text-primary;
-          border-bottom: 1px solid $table-border;
-        }
-      }
+    //     th {
+    //       padding: 12px 15px;
+    //       text-align: left;
+    //       font-weight: $font-weight-medium;
+    //       font-size: $font-size-base;
+    //       color: $text-primary;
+    //       border-bottom: 1px solid $table-border;
+    //     }
+    //   }
 
-      tbody {
-        tr {
-          // transition: $transition-fast;
+    //   tbody {
+    //     tr {
+    //       // transition: $transition-fast;
 
-          // &:hover {
-          //   background-color: $table-hover-bg;
-          // }
-          // 下边框（非最后一行）
-          &:not(:last-child) {
-            border-bottom: 1px solid $table-border;
-          }
+    //       // &:hover {
+    //       //   background-color: $table-hover-bg;
+    //       // }
+    //       // 下边框（非最后一行）
+    //       &:not(:last-child) {
+    //         border-bottom: 1px solid $table-border;
+    //       }
 
-          td {
-            padding: 12px 15px;
-            font-size: $font-size-base;
-            color: $text-regular;
-          }
-        }
-      }
-    }
+    //       td {
+    //         padding: 12px 15px;
+    //         font-size: $font-size-base;
+    //         color: $text-regular;
+    //       }
+    //     }
+    //   }
+    // }
 
     .pagination {
       padding: $base-padding;
@@ -353,6 +361,23 @@ export default {
         //边框
         // font-size: $font-size-base;
         color: $text-regular;
+      }
+    }
+  }
+}
+@media (max-width:768px){
+  .user-management{
+    .toolbar{
+      flex-wrap: wrap;
+      gap: 1rem;
+      // justify-content: center;
+      .left,.right{
+        width:100%;
+        justify-content: space-between;
+        
+      }
+      .right{
+        order: -1;
       }
     }
   }
