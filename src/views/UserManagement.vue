@@ -69,8 +69,14 @@
         <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
           <!--show-overflow-tooltip 会在内容溢出时显示提示信息 -->
         </el-table-column>
-        <el-table-column prop="role" label="角色" min-width="60"> </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right" min-width="140">
+        <el-table-column prop="role" label="角色" min-width="60">
+        </el-table-column>
+        <el-table-column
+          label="操作"
+          align="center"
+          fixed="right"
+          min-width="140"
+        >
           <template slot-scope="scope">
             <div class="ops">
               <el-button
@@ -233,16 +239,18 @@ export default {
     },
     // 保存用户数据
     handleSave(formData) {
-      // formData 来自子组件的表单数据，为用户数据对象
+      // formData 来自子组件的表单数据，为一个用户数据对象
       if (formData.id) {
         // 编辑模式：根据 id 查找并更新
         // map方法
         this.userList = this.userList.map((item) => {
-          if (item.id === formData.id) {
-            return formData;
-          } else {
-            return item;
-          }
+          // if (item.id === formData.id) {
+          //   return formData;
+          // } else {
+          //   return item;
+          // }
+          const result = item.id === formData.id ? formData : item;
+          return result;
         });
         // index替换方法
         // const index = this.userList.findIndex(
@@ -259,12 +267,12 @@ export default {
       } else {
         // null新增模式
         this.userList.push({
+          // ...formData,展开语法
+          ...formData,
+          //注意id需要位于formData展开之后，覆盖
           id: Date.now(),
-          // 或用...formData,展开语法
-          name: formData.name,
-          email: formData.email,
-          role: formData.role,
         });
+        // console.log(this.userList);
       }
       this.dialogVisible = false;
       this.editingUser = null;
@@ -365,8 +373,6 @@ export default {
     border-radius: $border-radius-base;
     box-shadow: $shadow-base;
     // overflow: hidden;？？
-
-
 
     .pagination {
       padding: $base-padding;

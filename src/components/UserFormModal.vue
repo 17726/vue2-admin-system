@@ -110,7 +110,7 @@ export default {
           this.$emit("save", this.formData);
         } else {
           // alert("请检查表单格式");
-          console.log("表单校验失败！");
+          // console.log("表单校验失败！");
           return false;
         }
       });
@@ -139,14 +139,9 @@ export default {
         if (newValue !== null) {
           // 编辑模式
           // 深拷贝用户数据到表单
-          // this.formData = { ...newValue };
-          this.formData = {
-            id: newValue.id,
-            name: newValue.name,
-            email: newValue.email,
-            role: newValue.role,
-          };
-          // 或直接this.formData = newValue;？？
+          this.formData = { ...newValue };
+          
+          // 绝对不能直接this.formData = newValue;
         } else {
           // 新增模式
           // form视图置空？？（是否必须）
