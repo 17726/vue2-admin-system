@@ -13,7 +13,7 @@
         label-position="right"
         label-width="5rem"
       >
-      <!-- :model单向数据流：父组件传递数据，子组件props：{model：formData} -->
+        <!-- :model单向数据流：父组件传递数据，子组件props：{model：formData} -->
 
         <el-form-item prop="name" label="用户名">
           <!-- prop: el-form绑定model的对象的属性，用于校验 -->
@@ -48,25 +48,21 @@ export default {
   },
   data() {
     const checkName = (rule, value, callback) => {
-      /**
+      /**练习自定义校验
        * 验证用户名（async-validator 规则用法）
        * @param {Object} rule
        * @param {string} value
        * @param {Function} callback
        */
       if (!value) {
-        callback(new Error("请输入姓名"));
-        return;
-      }
-      setTimeout(()=>{
-        if (value.length < 2) {
+        callback(new Error("请输入姓名")); // 已有 callback，但后面要移除 return
+      } else if (value.length < 2) {
         callback(new Error("姓名至少2个字符"));
-      } else if(value.length > 20) {
+      } else if (value.length > 20) {
         callback(new Error("姓名不能超过20个字符"));
+      } else {
+        callback(); // 通过校验
       }
-      else {
-        callback();
-      }},100);
     };
     return {
       formData: {
@@ -84,7 +80,7 @@ export default {
         // trigger(触发器)：blur表示输入框失去焦点时校验
         name: [
           // { required: true, message: "请输入用户", trigger: "blur" },
-          {validator:checkName, trigger: "blur" },
+          { validator: checkName, required: true, trigger: "blur" },
         ],
         email: [
           { required: true, message: "请输入邮箱", trigger: "blur" },

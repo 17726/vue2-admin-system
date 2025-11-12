@@ -58,22 +58,36 @@
           header-align="center"
           width="60"
         ></el-table-column>
-        <el-table-column prop="name" label="姓名" min-width="60" show-overflow-tooltip>
+        <el-table-column
+          prop="name"
+          label="姓名"
+          min-width="60"
+          show-overflow-tooltip
+        >
         </el-table-column>
         <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
           <!--show-overflow-tooltip 会在内容溢出时显示提示信息 -->
         </el-table-column>
-        <el-table-column prop="role" label="角色" width="60"> </el-table-column>
-        <el-table-column label="操作" align="center" fixed="right" width="120">
-          <template slot-scope="scope" >
-           <div class="ops">
-              <el-button size="mini" type="primary" plain @click="handleOpenEdit(scope.row)"
+        <el-table-column prop="role" label="角色" min-width="60"> </el-table-column>
+        <el-table-column label="操作" align="center" fixed="right" min-width="140">
+          <template slot-scope="scope">
+            <div class="ops">
+              <el-button
+                size="medium"
+                type="primary"
+                plain
+                @click="handleOpenEdit(scope.row)"
                 >编辑</el-button
               >
-              <el-button size="mini" type="danger" plain @click="del(scope.row.id)" icon="el-icon-delete" circle
-                ></el-button
-              >
-           </div>
+              <el-button
+                size="mini"
+                type="danger"
+                plain
+                @click="del(scope.row.id)"
+                icon="el-icon-delete"
+                circle
+              ></el-button>
+            </div>
           </template>
         </el-table-column>
       </el-table>
@@ -138,22 +152,59 @@ export default {
     },
     // "D"
     del(id) {
-      if (confirm("确定删除该用户吗？")) {
-        this.userList = this.userList.filter((item) => item.id !== id);
-        // 同时清除复选框记录
-        this.selectedIds = this.selectedIds.filter(
-          (selectedId) => selectedId !== id
-        );
-      }
+      // if (confirm("确定删除该用户吗？")) {
+      //   this.userList = this.userList.filter((item) => item.id !== id);
+      //   // 同时清除复选框记录
+      //   this.selectedIds = this.selectedIds.filter(
+      //     (selectedId) => selectedId !== id
+      //   );
+      // }
+
+      // 使用$confirm方法
+      // 注意：第二个参数title必须定义为String类型
+      this.$confirm("确定删除该用户吗？", "提示")
+        .then(() => {
+          this.userList = this.userList.filter((item) => item.id !== id);
+          // 同时清除复选框记录
+          this.selectedIds = this.selectedIds.filter(
+            (selectedId) => selectedId !== id
+          );
+          this.$message({
+            type: "success",
+            message: "删除成功",
+          });
+        })
+        .catch(() => {
+          // 取消删除
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
+        });
     },
     delSelected() {
-      if (confirm(`确定删除选中的${this.selectedIds.length}个用户吗？`)) {
-        this.userList = this.userList.filter((user) => {
-          return !this.selectedIds.includes(user.id);
+      this.$confirm(
+        `确定删除选中的${this.selectedIds.length}个用户吗？`,
+        "提示"
+      )
+        .then(() => {
+          this.userList = this.userList.filter((user) => {
+            return !this.selectedIds.includes(user.id);
+          });
+
+          this.$message({
+            type: "success",
+            message: `已成功删除${this.selectedIds.length}个用户`,
+          });
+          // 清空已选择的ID
+          this.selectedIds = [];
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
         });
-      }
-      // 清空已选择的ID
-      this.selectedIds = [];
     },
     // 清空搜索框
     clearSearchInput() {
@@ -317,9 +368,9 @@ export default {
     box-shadow: $shadow-base;
     // overflow: hidden;？
 
-    el-table{
-      el-table-column{
-        .ops{
+    el-table {
+      el-table-column {
+        .ops {
           display: flex;
           flex-wrap: wrap;
           align-content: center;
@@ -341,18 +392,18 @@ export default {
     }
   }
 }
-@media (max-width:768px){
-  .user-management{
-    .toolbar{
+@media (max-width: 768px) {
+  .user-management {
+    .toolbar {
       flex-wrap: wrap;
       gap: 1rem;
       // justify-content: center;
-      .left,.right{
-        width:100%;
+      .left,
+      .right {
+        width: 100%;
         justify-content: space-between;
-        
       }
-      .right{
+      .right {
         order: -1;
       }
     }
