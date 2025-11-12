@@ -47,6 +47,7 @@
         :data="filteredUserList"
         style="width: 100%"
         @selection-change="handleSelectionChange"
+        row-key="id"
       >
         <!--selection-change事件返回当前选中项的对象数组 -->
         <el-table-column type="selection" width="40"></el-table-column>
@@ -288,38 +289,39 @@ export default {
         );
       });
     },
-    selectedAll: {
-      // 部分全选与完全全选模式梳理
-      // 当前实现的是全选框只与筛选后的结果相关联（即部分全选）
-      get() {
-        // 如果当前筛选框的每一项的id都在selectedIds数组中
-        // 则为true
-        if (
-          this.selectedIds.length > 0 &&
-          this.filteredUserList.every((user) =>
-            this.selectedIds.includes(user.id)
-          )
-        ) {
-          return 1;
-        } else {
-          return 0;
-        }
-        // return this.selectedIds.length > 0 && this.filteredUserList.every((user) =>this.selectedIds.includes(user.id))
-      },
-      set(newValue) {
-        if (newValue) {
-          // 当前筛选结果全选时，将当前所有id加入selectedIds
-          // 为避免重复，先检查是否已存在
-          this.filteredUserList.forEach((user) => {
-            if (!this.selectedIds.includes(user.id)) {
-              this.selectedIds.push(user.id); //??还有更好的方法吗
-            }
-          });
-        } else {
-          this.selectedIds = [];
-        }
-      },
-    },
+    // 使用UI库table的全选功能
+    // selectedAll: {
+    //   // 部分全选与完全全选模式梳理
+    //   // 当前实现的是全选框只与筛选后的结果相关联（即部分全选）
+    //   get() {
+    //     // 如果当前筛选框的每一项的id都在selectedIds数组中
+    //     // 则为true
+    //     if (
+    //       this.selectedIds.length > 0 &&
+    //       this.filteredUserList.every((user) =>
+    //         this.selectedIds.includes(user.id)
+    //       )
+    //     ) {
+    //       return 1;
+    //     } else {
+    //       return 0;
+    //     }
+    //     // return this.selectedIds.length > 0 && this.filteredUserList.every((user) =>this.selectedIds.includes(user.id))
+    //   },
+    //   set(newValue) {
+    //     if (newValue) {
+    //       // 当前筛选结果全选时，将当前所有id加入selectedIds
+    //       // 为避免重复，先检查是否已存在
+    //       this.filteredUserList.forEach((user) => {
+    //         if (!this.selectedIds.includes(user.id)) {
+    //           this.selectedIds.push(user.id); //??还有更好的方法吗
+    //         }
+    //       });
+    //     } else {
+    //       this.selectedIds = [];
+    //     }
+    //   },
+    // },
   },
 };
 </script>
