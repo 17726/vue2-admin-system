@@ -3,75 +3,98 @@
     <!-- 操作栏 -->
     <div class="toolbar">
       <div class="left">
-        <button class="btn btn-primary" @click="handleOpenAdd()">
-          + 新增用户
-        </button>
-        <button
-          class="btn btn-danger"
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
+          @click="handleOpenAdd()"
+          size="medium"
+        >
+          新增用户
+        </el-button>
+        <el-button
+          type="danger"
+          icon="el-icon-delete"
           :disabled="selectedIds.length <= 0"
           @click="delSelected()"
+          size="medium"
         >
           批量删除
-        </button>
+        </el-button>
       </div>
       <div class="right">
-        <input
+        <el-input
           type="text"
-          class="search-input"
+          size="medium"
           placeholder="搜索用户名、邮箱、角色..."
           v-model="filters.searchText"
         />
         <!-- 实时搜索不需按钮 -->
         <!-- <button class="btn btn-default" >搜索</button> -->
-        <button class="btn btn-default" @click="clearSearchInput()">
+        <el-button
+          type="primary"
+          plain
+          size="medium"
+          @click="clearSearchInput()"
+        >
           清空
-        </button>
+        </el-button>
       </div>
     </div>
 
     <!-- 用户列表表格 -->
     <div class="content-area">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>
-              <!-- 绑定全选到计算属性 -->
-              <input type="checkbox" v-model="selectedAll" />
-            </th>
-            <th>序号</th>
-            <th>用户名</th>
-            <!-- <th>ID</th> -->
-            <th>邮箱</th>
-            <th>角色</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in filteredUserList" :key="item.id">
-            <!-- 复选框绑定数组，勾选会自动将value加入到数组 -->
-            <td>
-              <input type="checkbox" :value="item.id" v-model="selectedIds" />
-            </td>
-            <td>{{ index + 1 }}</td>
-            <td>{{ item.name }}</td>
-            <!-- <td>{{ item.id }}</td> -->
-            <td>{{ item.email }}</td>
-            <td>{{ item.role }}</td>
-            <td>
-              <button class="btn btn-link" @click="handleOpenEdit(item)">
-                编辑
-              </button>
-              <button class="btn btn-link btn-danger" @click="del(item.id)">
-                删除
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <el-table
+        :data="filteredUserList"
+        style="width: 100%"
+        @selection-change="handleSelectionChange"
+      >
+        <!--selection-change事件返回当前选中项的对象数组 -->
+        <el-table-column type="selection" width="40"></el-table-column>
+
+        <el-table-column
+          type="index"
+          label="序号"
+          align="center"
+          header-align="center"
+          width="60"
+        ></el-table-column>
+        <el-table-column
+          prop="name"
+          label="姓名"
+          min-width="60"
+          show-overflow-tooltip
+        >
+        </el-table-column>
+        <el-table-column prop="email" label="邮箱" show-overflow-tooltip>
+          <!--show-overflow-tooltip 会在内容溢出时显示提示信息 -->
+        </el-table-column>
+        <el-table-column prop="role" label="角色" min-width="60"> </el-table-column>
+        <el-table-column label="操作" align="center" fixed="right" min-width="140">
+          <template slot-scope="scope">
+            <div class="ops">
+              <el-button
+                size="medium"
+                type="primary"
+                plain
+                @click="handleOpenEdit(scope.row)"
+                >编辑</el-button
+              >
+              <el-button
+                size="mini"
+                type="danger"
+                plain
+                @click="del(scope.row.id)"
+                icon="el-icon-delete"
+                circle
+              ></el-button>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
 
       <!-- 分页器 (后续实现) -->
       <div class="pagination">
-        <span class="total">共 {{ userList.length }} 条</span>
+        <span class="total">共 {{ filteredUserList.length }} 条</span>
       </div>
       <!-- 用户表单弹窗 -->
       <UserFormModal
@@ -80,7 +103,7 @@
         @save="handleSave"
         @close="handleClose"
       >
-        <!--:user 传递当前编辑的用户对象 -->
+        <!--:user 传递当前编辑的用户对象(父传子) -->
         <!--@save 监听保存事件 -->
         <!--@close 监听关闭事件 -->
       </UserFormModal>
@@ -118,22 +141,70 @@ export default {
     };
   },
   methods: {
+    handleSelectionChange(selection) {
+      // console.log("选中项：", selection);
+      // selection为当前选中的行 对象 数组
+
+      this.selectedIds = selection.map((item) => {
+        return item.id;
+      });
+      console.log(this.selectedIds);
+    },
     // "D"
     del(id) {
-      if (confirm("确定删除该用户吗？")) {
-        this.userList = this.userList.filter((item) => item.id !== id);
-        // 同时清除复选框记录
-        this.selectedIds = this.selectedIds.filter(
-          (selectedId) => selectedId !== id
-        );
-      }
+      // if (confirm("确定删除该用户吗？")) {
+      //   this.userList = this.userList.filter((item) => item.id !== id);
+      //   // 同时清除复选框记录
+      //   this.selectedIds = this.selectedIds.filter(
+      //     (selectedId) => selectedId !== id
+      //   );
+      // }
+
+      // 使用$confirm方法
+      // 注意：第二个参数title必须定义为String类型
+      this.$confirm("确定删除该用户吗？", "提示")
+        .then(() => {
+          this.userList = this.userList.filter((item) => item.id !== id);
+          // 同时清除复选框记录
+          this.selectedIds = this.selectedIds.filter(
+            (selectedId) => selectedId !== id
+          );
+          this.$message({
+            type: "success",
+            message: "删除成功",
+          });
+        })
+        .catch(() => {
+          // 取消删除
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
+        });
     },
     delSelected() {
-      if (confirm(`确定删除选中的${this.selectedIds.length}个用户吗？`)) {
-        this.userList = this.userList.filter((user) => {
-          return !this.selectedIds.includes(user.id);
+      this.$confirm(
+        `确定删除选中的${this.selectedIds.length}个用户吗？`,
+        "提示"
+      )
+        .then(() => {
+          this.userList = this.userList.filter((user) => {
+            return !this.selectedIds.includes(user.id);
+          });
+
+          this.$message({
+            type: "success",
+            message: `已成功删除${this.selectedIds.length}个用户`,
+          });
+          // 清空已选择的ID
+          this.selectedIds = [];
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
         });
-      }
     },
     // 清空搜索框
     clearSearchInput() {
@@ -162,20 +233,28 @@ export default {
     // 保存用户数据
     handleSave(formData) {
       // formData 来自子组件的表单数据，为用户数据对象
-      // console.log("保存的用户数据:", formData);
       if (formData.id) {
         // 编辑模式：根据 id 查找并更新
-        const index = this.userList.findIndex(
-          (item) => item.id === formData.id
-        );
-        // findIndex找不到返回-1
-        if (index !== -1) {
-          // 或使用 Vue.set 或 $set 确保响应式更新 ?
-          // this.$set(this.userList, index, formData);
+        // map方法
+        this.userList = this.userList.map((item) => {
+          if (item.id === formData.id) {
+            return formData;
+          } else {
+            return item;
+          }
+        });
+        // index替换方法
+        // const index = this.userList.findIndex(
+        //   (item) => item.id === formData.id
+        // );
+        // // findIndex找不到返回-1
+        // if (index !== -1) {
+        //   // 或使用 Vue.set 或 $set 确保响应式更新
+        //   // this.$set(this.userList, index, formData);
 
-          // 直接替换对象
-          this.userList[index] = formData;
-        }
+        //   // 直接替换对象（不推荐）
+        //   this.userList[index] = formData;
+        // }
       } else {
         // null新增模式
         this.userList.push({
@@ -230,10 +309,10 @@ export default {
       set(newValue) {
         if (newValue) {
           // 当前筛选结果全选时，将当前所有id加入selectedIds
-          // 为避免重复，先检查是否已存在？
+          // 为避免重复，先检查是否已存在
           this.filteredUserList.forEach((user) => {
             if (!this.selectedIds.includes(user.id)) {
-              this.selectedIds.push(user.id);
+              this.selectedIds.push(user.id); //??还有更好的方法吗
             }
           });
         } else {
@@ -247,7 +326,7 @@ export default {
 
 <style lang="scss" scoped>
 .user-management {
-  min-width: max-content;
+  // min-width: max-content;
   padding: $base-padding;
 
   // 操作工具栏
@@ -255,6 +334,8 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    // 未达到断点不换行
+    flex-wrap: nowrap;
     background: $bg-white;
     border-radius: $border-radius-base;
     box-shadow: $shadow-base;
@@ -271,59 +352,19 @@ export default {
       display: flex;
       gap: 10px;
       align-items: center;
-
-      .search-input {
-        // width: min(240px,100%);
-      }
     }
   }
 
   // 内容区域
   .content-area {
+    padding: $base-padding;
     background: $bg-white;
-    // min-height: 400px;？
+    // min-height: 400px;？？
     border-radius: $border-radius-base;
     box-shadow: $shadow-base;
-    // overflow: hidden;？
+    // overflow: hidden;？？
 
-    .user-table {
-      width: 100%;
-      // 边框合并？
-      // border-collapse: collapse;
 
-      thead {
-        background-color: $table-header-bg;
-
-        th {
-          padding: 12px 15px;
-          text-align: left;
-          font-weight: $font-weight-medium;
-          font-size: $font-size-base;
-          color: $text-primary;
-          border-bottom: 1px solid $table-border;
-        }
-      }
-
-      tbody {
-        tr {
-          // transition: $transition-fast;
-
-          // &:hover {
-          //   background-color: $table-hover-bg;
-          // }
-          // 下边框（非最后一行）
-          &:not(:last-child) {
-            border-bottom: 1px solid $table-border;
-          }
-
-          td {
-            padding: 12px 15px;
-            font-size: $font-size-base;
-            color: $text-regular;
-          }
-        }
-      }
-    }
 
     .pagination {
       padding: $base-padding;
@@ -334,6 +375,33 @@ export default {
         //边框
         // font-size: $font-size-base;
         color: $text-regular;
+      }
+    }
+  }
+}
+
+/* 操作按钮居中样式 - 使用深度选择器 */
+// ::v-deep .el-table .cell .ops {
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 6px;
+// }
+
+@media (max-width: 768px) {
+  .user-management {
+    .toolbar {
+      flex-wrap: wrap;
+      gap: 1rem;
+      // justify-content: center;
+      .left,
+      .right {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .right {
+        order: -1;
       }
     }
   }
