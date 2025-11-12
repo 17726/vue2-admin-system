@@ -352,10 +352,6 @@ export default {
       display: flex;
       gap: 10px;
       align-items: center;
-
-      .search-input {
-        // width: min(240px,100%);
-      }
     }
   }
 
@@ -363,21 +359,12 @@ export default {
   .content-area {
     padding: $base-padding;
     background: $bg-white;
-    // min-height: 400px;？
+    // min-height: 400px;？？
     border-radius: $border-radius-base;
     box-shadow: $shadow-base;
-    // overflow: hidden;？
+    // overflow: hidden;？？
 
-    el-table {
-      el-table-column {
-        .ops {
-          display: flex;
-          flex-wrap: wrap;
-          align-content: center;
-          justify-content: center;
-        }
-      }
-    }
+
 
     .pagination {
       padding: $base-padding;
@@ -392,6 +379,16 @@ export default {
     }
   }
 }
+
+/* 操作按钮居中样式 - 使用深度选择器 */
+// ::v-deep .el-table .cell .ops {
+//   display: flex;
+//   flex-wrap: wrap;
+//   justify-content: center;
+//   align-items: center;
+//   gap: 6px;
+// }
+
 @media (max-width: 768px) {
   .user-management {
     .toolbar {
