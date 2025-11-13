@@ -38,23 +38,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#app, .app-container {
-  // 重要
-  // 让根容器占满整个视口高度 
+#app,
+.app-container {
+  // 让根容器占满整个视口高度
   height: 100vh;
   width: 100vw;
-  // 100%还是100vh？
-  overflow: hidden; // 防止整体滚动区域（是否必须？？
+  // 防止整体滚动区域（是否必须？？
+  // 未测试出双滚动条异常
+  overflow: hidden;
 }
 
 .sidebar {
-  // height: 100vh;
+  // height: 100vh;？
   background-color: $sidebar-bg;
   /* 让侧边栏自己处理垂直溢出 */
-  overflow-y: auto; 
+  overflow-y: auto;
   /* 隐藏不需要的水平滚动条 */
-  overflow-x: hidden; 
-  transition: margin-left 0.3s ease;//移动端隐藏动画
+  overflow-x: hidden;
+  transition: margin-left 0.3s ease; //移动端隐藏动画
 }
 .main-content {
   // flex: 1; // 主内容区占满剩余空间
@@ -66,14 +67,13 @@ export default {
   padding: 0;
 }
 
-
 // 响应式: 小屏幕隐藏侧边栏
 @media (max-width: 768px) {
   .sidebar.el-aside {
     /* 简单粗暴但有效：在小屏幕上直接隐藏侧边栏。
       el-container (flex布局) 会自动让 .main-content 占满100%宽度。
     */
-    display: none; // 或改为抽屉式
+    display: none; // 之后改为抽屉式
   }
 }
 </style>

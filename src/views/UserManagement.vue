@@ -244,11 +244,6 @@ export default {
         // 编辑模式：根据 id 查找并更新
         // map方法
         this.userList = this.userList.map((item) => {
-          // if (item.id === formData.id) {
-          //   return formData;
-          // } else {
-          //   return item;
-          // }
           const result = item.id === formData.id ? formData : item;
           return result;
         });
@@ -272,7 +267,6 @@ export default {
           //注意id需要位于formData展开之后，覆盖
           id: Date.now(),
         });
-        // console.log(this.userList);
       }
       this.dialogVisible = false;
       this.editingUser = null;
@@ -322,7 +316,7 @@ export default {
     //       // 为避免重复，先检查是否已存在
     //       this.filteredUserList.forEach((user) => {
     //         if (!this.selectedIds.includes(user.id)) {
-    //           this.selectedIds.push(user.id); //??还有更好的方法吗
+    //           this.selectedIds.push(user.id);
     //         }
     //       });
     //     } else {
@@ -369,10 +363,8 @@ export default {
   .content-area {
     padding: $base-padding;
     background: $bg-white;
-    // min-height: 400px;？？
     border-radius: $border-radius-base;
     box-shadow: $shadow-base;
-    // overflow: hidden;？？
 
     .pagination {
       padding: $base-padding;
@@ -380,8 +372,6 @@ export default {
       border-top: 1px solid $table-border;
 
       .total {
-        //边框
-        // font-size: $font-size-base;
         color: $text-regular;
       }
     }

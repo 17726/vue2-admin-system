@@ -29,9 +29,6 @@
 *::after,
 *::before {
   box-sizing: border-box;
-  // 清除默认 margin 和 padding？？
-  // margin: 0;
-  // padding: 0;
 }
 
 body,
@@ -49,9 +46,9 @@ html {
   color: $text-primary;
   background-color: $bg-page;
   height: 100%;
-  // ？？
-  // -webkit-font-smoothing: antialiased;
-  // -moz-osx-font-smoothing: grayscale;
+  // 改善字体渲染（特别是 macOS/iOS）
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 // ========================================

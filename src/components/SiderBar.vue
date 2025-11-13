@@ -6,7 +6,8 @@
       <ul>
         <li class="menu-item">
           <!-- 后续可添加图标 -->
-          仪表盘 (待开发)</li>
+          仪表盘 (待开发)
+        </li>
         <li class="menu-item active">用户管理</li>
         <li class="menu-item">商品管理 (待开发)</li>
         <li class="menu-item">订单管理 (待开发)</li>
@@ -32,7 +33,7 @@ export default {};
   .logo {
     padding: $base-padding;
     height: $top-header-height; //同顶栏高度一致
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,7 +45,7 @@ export default {};
   .menu {
     flex: 1; // 菜单区域占满剩余空间
     // overflow-y: auto; // 菜单过多时内部滚动
-    
+
     ul {
       //清除默认样式
       list-style: none;
@@ -56,14 +57,14 @@ export default {};
         cursor: pointer;
         // transition: $transition-base;
         font-size: $font-size-base;
-    
+
         &.active {
           // $primary-color;
           background-color: $sidebar-active-bg;
           color: $sidebar-active-text;
           font-weight: $font-weight-medium;
         }
-        
+
         &:hover:not(.active) {
           background-color: $sidebar-hover-bg;
         }

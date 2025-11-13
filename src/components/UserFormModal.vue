@@ -99,6 +99,8 @@ export default {
   methods: {
     close() {
       // 传递“关闭”事件
+
+      // （测试阶段未复现出异常，暂不启用）
       // 清除表单校验状态？？
       // this.$refs.userForm.clearValidate();
       this.$emit("close");
@@ -109,8 +111,7 @@ export default {
           // 表单校验通过
           this.$emit("save", this.formData);
         } else {
-          // alert("请检查表单格式");
-          // console.log("表单校验失败！");
+          console.log("表单校验失败");
           return false;
         }
       });
@@ -128,7 +129,7 @@ export default {
       immediate: true,
       handler(newValue) {
         // 当 user 变化时（打开弹窗或切换编辑对象）
-        // 使用 nextTick 确保 DOM 更新完毕？？
+        // 使用 nextTick 确保 DOM 更新完毕
         // this.$nextTick(() => {
         //   // 清除上一次的校验红字提示
         //   if (this.$refs.userForm) {
@@ -137,13 +138,12 @@ export default {
         // });
 
         if (newValue !== null) {
-          // 编辑模式
-          // 深拷贝用户数据到表单
+          // 编辑模式：浅拷贝用户数据到表单
           this.formData = { ...newValue };
-          
           // 绝对不能直接this.formData = newValue;
         } else {
           // 新增模式
+          // （测试阶段未复现出异常，暂不启用）
           // form视图置空？？（是否必须）
           // this.formData = {
           //   id: null,
